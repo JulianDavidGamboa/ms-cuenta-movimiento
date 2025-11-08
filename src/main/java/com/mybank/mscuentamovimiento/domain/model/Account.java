@@ -11,13 +11,11 @@ public class Account {
     private Boolean status;
     private String clientId;
 
-    public Account(Long id, String accountNumber, AccountType accountType, BigDecimal initialBalance, BigDecimal actualBalance, Boolean status, String clientId) {
-        this.id = id;
+    public Account(String accountNumber, AccountType accountType, BigDecimal initialBalance, String clientId) {
+        this.validateData(accountNumber, accountType, initialBalance, clientId);
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.initialBalance = initialBalance;
-        this.actualBalance = actualBalance;
-        this.status = status;
         this.clientId = clientId;
     }
 
