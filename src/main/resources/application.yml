@@ -35,6 +35,20 @@ resilience4j:
     instances:
       clientValidation:
         slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        recordExceptions:
+          - feign.FeignException
+          - java.net.ConnectException
+          - java.net.SocketTimeoutException
+          - java.io.IOException
+  retry:
+    instances:
+      clientValidation:
+        maxAttempts: 3
+        waitDuration: 500ms
 client:
   ms:
     url: http://localhost:8081
