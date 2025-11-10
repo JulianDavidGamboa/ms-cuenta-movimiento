@@ -15,7 +15,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:29092
     consumer:
       group-id: account-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -28,7 +28,7 @@ spring:
     type: redis
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
 resilience4j:
   circuitbreaker:

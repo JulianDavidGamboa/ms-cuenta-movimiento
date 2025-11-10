@@ -1,28 +1,20 @@
-# docker-compose.yml
-version: '3.8'
+name: ms-account
 
 services:
   account-ms:
     build:
-      context: ./ms-cuenta-movimiento
+      context: .
       dockerfile: Dockerfile
     container_name: account-ms
+    networks:
+      - ms-network
     ports:
       - "8082:8082"
-    depends_on:
-      account-db:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      client-ms:
-        condition: service_healthy
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://account-db:5432/accountdb
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
-      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:9092
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:29092
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
       - CLIENT_MS_URL=http://client-ms:8081
@@ -32,5 +24,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-    volumes:
-      - ./ms-cuenta-movimiento:/app
+networks:
+  ms-network:
+    external: true
