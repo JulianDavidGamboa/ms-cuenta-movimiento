@@ -2,72 +2,73 @@ package com.mybank.mscuentamovimiento.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Transaction {
-    private Long id;
-    private LocalDateTime dateTime;
-    private TransactionType transactionType;
-    private BigDecimal value;
-    private BigDecimal balance;
-    private Long idAccount;
+    private String transactionId;
+    private Date date;
+    private String type;
+    private double amount;
+    private double balanceAfter;
+    private String accountNumber;
 
-    public Transaction(TransactionType transactionType, BigDecimal value, BigDecimal balance, Long idAccount) {
-        this.transactionType = transactionType;
-        this.value = value;
-        this.balance = balance;
-        this.idAccount = idAccount;
+    public Transaction() {
     }
 
-    private void validateData(TransactionType transactionType, BigDecimal value,
-                              BigDecimal balance, Long idAccount) {
-        if (transactionType == null) {
-            throw new IllegalArgumentException("El tipo de movimiento no puede ser nulo");
-        }
-        if (value == null || value.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("El valor debe ser mayor a cero");
-        }
-        if (balance == null) {
-            throw new IllegalArgumentException("El saldo resultante no puede ser nulo");
-        }
-        if (idAccount == null) {
-            throw new IllegalArgumentException("El cuentaId no puede ser nulo");
-        }
-
+    public Transaction(String transactionId, Date date, String type, double amount, double balanceAfter, String accountNumber) {
+        this.transactionId = transactionId;
+        this.date = date;
+        this.type = type;
+        this.amount = amount;
+        this.balanceAfter = balanceAfter;
+        this.accountNumber = accountNumber;
     }
 
-    public BigDecimal getValueWithSign() {
-        return value.multiply(BigDecimal.valueOf(transactionType.getMultiplier()));
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public Long getId() {
-        return id;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Date getDate() {
+        return date;
     }
 
-    public TransactionType getTransactionType() {
-        return transactionType;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public String getType() {
+        return type;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Long getIdAccount() {
-        return idAccount;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public double getBalanceAfter() {
+        return balanceAfter;
+    }
+
+    public void setBalanceAfter(double balanceAfter) {
+        this.balanceAfter = balanceAfter;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }

@@ -3,91 +3,70 @@ package com.mybank.mscuentamovimiento.domain.model;
 import java.math.BigDecimal;
 
 public class Account {
-    private Long id;
     private String accountNumber;
-    private AccountType accountType;
-    private BigDecimal initialBalance;
-    private BigDecimal actualBalance;
-    private Boolean status;
+    private String accountType;
+    private double balance;
+    private double initialBalance;
+    private boolean active;
     private String clientId;
 
-    public Account(String accountNumber, AccountType accountType, BigDecimal initialBalance, String clientId) {
-        this.validateData(accountNumber, accountType, initialBalance, clientId);
+    public Account() {
+    }
+
+    public Account(String accountNumber, String accountType, double balance, double initialBalance, boolean active, String clientId) {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
+        this.balance = balance;
         this.initialBalance = initialBalance;
+        this.active = active;
         this.clientId = clientId;
-    }
-
-    private void validateData(String accountNumber, AccountType accountType, BigDecimal initialBalance, String clientId) {
-        if (accountNumber == null ||accountNumber.trim().isEmpty()) {
-            throw new IllegalArgumentException("El numero de cuenta no puede estar vacio");
-        }
-        if (accountType == null) {
-            throw new IllegalArgumentException("El tipo de cuenta no puede ser nulo");
-        }
-        if (initialBalance == null || initialBalance.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("El saldo inicial no puede ser negativo");
-        }
-        if (clientId == null || clientId.trim().isEmpty()) {
-            throw new IllegalArgumentException("El clienteId no puede estar vacío");
-        }
-    }
-
-    public void applyTransaction(BigDecimal valor) {
-        BigDecimal newBalance = this.actualBalance.add(valor);
-        if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalStateException("Saldo no disponible");
-        }
-        this.actualBalance = newBalance;
-    }
-
-    public void updateStatus(Boolean nuevoEstado) {
-        this.status = nuevoEstado;
-    }
-
-    public boolean haveSufficientBalance(BigDecimal valor) {
-        BigDecimal newBalance = this.actualBalance.add(valor);
-        return newBalance.compareTo(BigDecimal.ZERO) >= 0;
-    }
-
-    public boolean isActive() {
-        return this.status != null && this.status;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getAccountNumber() {
         return accountNumber;
     }
 
-    public AccountType getAccountType() {
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getAccountType() {
         return accountType;
     }
 
-    public BigDecimal getInitialBalance() {
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public double getInitialBalance() {
         return initialBalance;
     }
 
-    public BigDecimal getActualBalance() {
-        return actualBalance;
+    public void setInitialBalance(double initialBalance) {
+        this.initialBalance = initialBalance;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getClientId() {
         return clientId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setActualBalance(BigDecimal actualBalance) {
-        this.actualBalance = actualBalance;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }
